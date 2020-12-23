@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 template <class T>
 class StackEl {
 private:
@@ -20,6 +21,13 @@ public:
 		Value = value;
 		Pred = pred;
 	}
+
+	~StackEl() {
+		if (Pred)
+		{
+			delete Pred;
+		}
+	}
 };
 
 template <class T>
@@ -36,11 +44,16 @@ public:
 
 	}
 
-	Stack<T> operator+=(T x) {
-		StackEl<T> * newEl = new StackEl<T>(x, _head);
-		_head = newEl;		
+	void operator+=(T x) {
+		_head = new StackEl<T>(x, _head);
 		++_size;
-		return *this;
+	}
+
+	~Stack() {
+		if (_head)
+		{
+			delete _head;
+		}
 	}
 
 	T operator--() {
@@ -73,5 +86,6 @@ public:
 	bool Any() {
 		return _head != nullptr;
 	}
+
 
 };
